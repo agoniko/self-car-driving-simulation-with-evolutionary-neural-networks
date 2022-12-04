@@ -20,7 +20,7 @@ def run(genomes, config):
     generation_font = pygame.font.SysFont("Arial", 30)
     alive_font = pygame.font.SysFont("Arial", 20)
     screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
-    game_map = pygame.image.load('map5.png').convert() # Convert Speeds Up A Lot
+    game_map = pygame.image.load('map4.png').convert() # Convert Speeds Up A Lot
     pygame.display.flip()
 
     nets = []
