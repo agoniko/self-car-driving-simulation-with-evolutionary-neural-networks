@@ -19,7 +19,7 @@ def run(genomes, config):
     clock = pygame.time.Clock()
     generation_font = pygame.font.SysFont("Arial", 30)
     alive_font = pygame.font.SysFont("Arial", 20)
-    screen = pygame.display.set_mode((WIDTH, HEIGHT)) #, pygame.FULLSCREEN)
+    screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
     game_map = pygame.image.load('map5.png').convert() # Convert Speeds Up A Lot
     pygame.display.flip()
 
@@ -114,7 +114,3 @@ if __name__ == '__main__':
     p.add_reporter(stats)
     p.add_reporter(Checkpointer(5,100,"./checkpoints/neat-checkpoint-"))
     p.run(run,100)
-
-
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
