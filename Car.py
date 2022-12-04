@@ -69,7 +69,7 @@ class Car:
 
     def update(self, game_map):
         self.rotated_sprite = self.rotate_center(self.sprite, self.angle)
-        self.position[0] += math.cos(math.radians( - self.angle)) * self.speed
+        self.position[0] += math.cos(math.radians(360 - self.angle)) * self.speed
         self.position[0] = max(self.position[0], 20)
         self.position[0] = min(self.position[0], WIDTH - 120)
 
@@ -103,7 +103,7 @@ class Car:
         return rotated_image
 
     def get_reward(self):
-        return self.distance / (60/2)
+        return self.distance / (CAR_SIZE_X / 2)
 
     def get_data(self):
         # Get Distances To Border
