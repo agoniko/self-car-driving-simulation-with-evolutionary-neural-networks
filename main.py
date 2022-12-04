@@ -44,7 +44,6 @@ def run(genomes, config):
 
         for i,car in enumerate(cars):
             out = nets[i].activate(car.get_data())
-            print(out)
             choice = out.index(max(out))
             if choice == 0:
                 car.angle += (20 * out[choice]) # Left
