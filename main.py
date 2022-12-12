@@ -2,6 +2,7 @@
 # Code Changed, Optimized And Commented By: NeuralNine (Florian Dedov)
 # Code optimized by agoniko, now the power of the decision taken is influenced by the decision itself, in this way the other choices are shrunk towards zero and the neural network
 # not only provides the decision to be taken (accelerate, brake, turn left/right) but by how much.
+import re
 import sys
 import neat
 import pygame
@@ -9,10 +10,25 @@ import glob
 import os
 from Car import Car
 from neat import Checkpointer
+from PIL import Image
+import shutil
 
+count = 0
 WIDTH = 1920
 HEIGHT = 1080
 current_generation = 0
+
+def make_gif():
+    filename = "race.gif"
+    files = list(filter(os.path.isfile, glob.glob("./screens/" + "*")))
+    files.sort(key = lambda s: int(re.search(r'\d+', s).group()))
+    files.reverse()
+    frames = [Image.open(image) for image in files]
+    frames.reverse()
+    frame_one = frames[0]
+    frame_one.save(filename, format="GIF", append_images=frames,
+               save_all=True, duration=10, loop=0)
+    shutil.rmtree("./screens/")
 
 
 def run(genomes, config):
@@ -20,7 +36,7 @@ def run(genomes, config):
     generation_font = pygame.font.SysFont("Arial", 30)
     alive_font = pygame.font.SysFont("Arial", 20)
     screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
-    game_map = pygame.image.load('map5.png').convert() # Convert Speeds Up A Lot
+    game_map = pygame.image.load('map3.png').convert() # Convert Speeds Up A Lot
     pygame.display.flip()
 
     nets = []
@@ -34,12 +50,14 @@ def run(genomes, config):
 
     global current_generation
 
-    count = 0
-    while True:
+    global count
 
+    while True:
+        #pygame.image.save(screen, f"./screens/screenshot{count}.jpeg")  # decomment to save every frame
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                #make_gif() #to make the gif, DECOMMENT ALSO LINES 56-113   (This process take very long time, it's purpose is to generate the readme.md gif
                 sys.exit(0)
 
         for i,car in enumerate(cars):
@@ -66,7 +84,7 @@ def run(genomes, config):
             break
 
         count +=1
-        if count == 60 * 20:
+        if count % (60 * 5) == 0:
             break
 
         # Draw Map And All Cars That Are Alive
@@ -92,6 +110,8 @@ def run(genomes, config):
 
 if __name__ == '__main__':
     search_dir = "./checkpoints/"
+    #os.mkdir("./screens/", )
+
     files = list(filter(os.path.isfile, glob.glob(search_dir + "*")))
     files.sort(key=lambda x: os.path.getmtime(x))
 
