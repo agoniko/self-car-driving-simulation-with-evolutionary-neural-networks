@@ -5,4 +5,4 @@
 ## This version also provides model checkpoints in order to save the progress of the neural network learning
 
 ### Gif example of a 4 generations process:
-![img.p![race.gif](race.gif)ng](img.png)
+![race.gif](race.gif)
